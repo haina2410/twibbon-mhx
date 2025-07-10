@@ -1,36 +1,36 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { campaignConfig } from "@/data";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Twibbonize - Summer Volunteer Campaign 2024",
-  description:
-    "Create your team profile picture for the Summer Volunteer Campaign 2024. Choose your team, upload your photo, and download your personalized profile picture with team frame.",
+  title: campaignConfig.title,
+  description: campaignConfig.subtitle,
   keywords: [
     "volunteer",
     "campaign",
     "profile picture",
     "team",
     "summer",
-    "2024",
+    "2025",
+    "Mùa hè Xanh",
+    "Đại học Khoa học tự nhiên TP.HCM",
   ],
-  authors: [{ name: "Summer Volunteer Campaign Team" }],
-  creator: "Summer Volunteer Campaign Team",
-  publisher: "Summer Volunteer Campaign Team",
+  authors: [{ name: "Ban Truyền thông Mùa hè Xanh 2025" }],
+  creator: "Ban Truyền thông Mùa hè Xanh 2025",
+  publisher: "Ban Truyền thông Mùa hè Xanh 2025",
   openGraph: {
-    title: "Twibbonize - Summer Volunteer Campaign 2024",
-    description:
-      "Create your team profile picture for the Summer Volunteer Campaign 2024",
+    title: campaignConfig.title,
+    description: campaignConfig.subtitle,
     type: "website",
-    locale: "en_US",
+    locale: "vi_VN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Twibbonize - Summer Volunteer Campaign 2024",
-    description:
-      "Create your team profile picture for the Summer Volunteer Campaign 2024",
+    title: campaignConfig.title,
+    description: campaignConfig.subtitle,
   },
   viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",

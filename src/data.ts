@@ -27,14 +27,14 @@ export const teams: Team[] = [
     name: "ONC",
     color: "#EF4444",
     frameUrl: oncFrame,
-    description: "Đội hình ONC",
+    description: "Đội hình Ong Nghiên Cứu",
   },
   {
     id: "vutt",
-    name: "VUTT",
+    name: "VƯTT",
     color: "#3B82F6",
     frameUrl: vuttFrame,
-    description: "Đội hình VUTT",
+    description: "Đội hình Vườn ươm tuổi thơ",
   },
   {
     id: "team-201",
@@ -48,14 +48,14 @@ export const teams: Team[] = [
     name: "Đồng Tháp",
     color: "#F59E0B",
     frameUrl: dongthapFrame,
-    description: "Đội hình Đồng Tháp",
+    description: "Đội hình thường trú tỉnh Đồng Tháp",
   },
   {
     id: "vinhlong",
     name: "Vĩnh Long",
     color: "#8B5CF6",
     frameUrl: vinhlongFrame,
-    description: "Đội hình Vĩnh Long",
+    description: "Đội hình thường trú tỉnh Vĩnh Long",
   },
   {
     id: "songxanh",
@@ -110,16 +110,15 @@ export const teams: Team[] = [
 
 // Campaign configuration
 export const campaignConfig = {
-  title: "Twibbonize",
-  subtitle:
-    "Chiến dịch Mùa hè Xanh 2025 trường Đại học Khoa học tự nhiên TP.HCM",
+  title: "Chiến dịch Mùa hè Xanh 2025",
+  subtitle: "Trường Đại học Khoa học tự nhiên TP.HCM",
   year: "2025",
-  footerText: "Chiến dịch Mùa hè Xanh 2025",
+  footerText: "Website làm nhanh 30 phút để thay thế cho Twibbonize .",
 
   // Step titles (can be customized for different languages)
   stepTitles: {
-    team: "Chọn Đội",
-    upload: "Tải Ảnh",
+    team: "Chọn Đội hình",
+    upload: "Chọn hình đại diện",
     crop: "Cắt & Xem trước",
     final: "Tải xuống",
   },
@@ -153,19 +152,11 @@ export const campaignConfig = {
       dragCenter: "Kéo trung tâm để di chuyển vùng cắt",
       autoApply: "Việc cắt sẽ được áp dụng tự động để tạo ảnh cuối cùng",
     },
-
-    // Final preview instructions
-    finalTips: {
-      title: "Mẹo để có kết quả tốt nhất:",
-      useAsProfile: "Sử dụng làm ảnh đại diện trên mạng xã hội",
-      shareSupport: "Chia sẻ để thể hiện sự ủng hộ của bạn cho chiến dịch",
-      tagFriends: "Gắn thẻ bạn bè để tham gia đội của bạn!",
-    },
   },
 
   // Social sharing configuration
   socialSharing: {
     title: "Chiến dịch Mùa hè Xanh 2025",
-    description: "Xem ảnh đại diện của tôi cho chiến dịch Mùa hè Xanh 2025!",
+    description: "Xem ảnh đại diện của mình cho chiến dịch Mùa hè Xanh 2025!",
   },
 };

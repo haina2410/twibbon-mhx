@@ -39,6 +39,22 @@ export default function Home() {
     setCroppedImageUrl("");
   };
 
+  const handleBack = () => {
+    switch (currentStep) {
+      case "upload":
+        setCurrentStep("team");
+        break;
+      case "crop":
+        setCurrentStep("upload");
+        break;
+      case "final":
+        setCurrentStep("crop");
+        break;
+      default:
+        break;
+    }
+  };
+
   const getStepNumber = (step: Step) => {
     const steps = { team: 1, upload: 2, crop: 3, final: 4 };
     return steps[step];
@@ -47,6 +63,8 @@ export default function Home() {
   const getStepTitle = (step: Step) => {
     return campaignConfig.stepTitles[step];
   };
+
+  const canGoBack = currentStep !== "team";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -68,27 +86,51 @@ export default function Home() {
               </div>
             </div>
 
-            {currentStep !== "team" && (
-              <button
-                onClick={handleStartOver}
-                className="text-gray-600 hover:text-gray-800 text-sm font-medium flex items-center space-x-1"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            <div className="flex items-center space-x-3">
+              {canGoBack && (
+                <button
+                  onClick={handleBack}
+                  className="text-gray-600 hover:text-gray-800 text-sm font-medium flex items-center space-x-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  />
-                </svg>
-                <span>{campaignConfig.buttonTexts.startOver}</span>
-              </button>
-            )}
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                  <span>Quay lại</span>
+                </button>
+              )}
+
+              {currentStep !== "team" && (
+                <button
+                  onClick={handleStartOver}
+                  className="text-gray-600 hover:text-gray-800 text-sm font-medium flex items-center space-x-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                  <span>{campaignConfig.buttonTexts.startOver}</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -162,6 +204,31 @@ export default function Home() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          {/* Navigation Bar */}
+          {canGoBack && (
+            <div className="border-b border-gray-200 px-6 py-4">
+              <button
+                onClick={handleBack}
+                className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-800 font-medium transition-colors"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+                <span>Quay lại bước trước</span>
+              </button>
+            </div>
+          )}
+
           {currentStep === "team" && (
             <TeamSelector
               selectedTeam={selectedTeam}
@@ -199,11 +266,7 @@ export default function Home() {
           <div className="text-center">
             <p className="text-gray-600 text-sm">{campaignConfig.footerText}</p>
             <div className="mt-4 flex justify-center space-x-6">
-              <a
-                href="https://www.facebook.com/bantruyenthongMAT"
-                target="_blank"
-                className="text-gray-400 hover:text-gray-500"
-              >
+              <a href="#" className="text-gray-400 hover:text-gray-500">
                 <span className="sr-only">Facebook</span>
                 <svg
                   className="w-5 h-5"
@@ -217,11 +280,7 @@ export default function Home() {
                   />
                 </svg>
               </a>
-              <a
-                href="https://www.instagram.com/bantruyenthongmat/"
-                target="_blank"
-                className="text-gray-400 hover:text-gray-500"
-              >
+              <a href="#" className="text-gray-400 hover:text-gray-500">
                 <span className="sr-only">Instagram</span>
                 <svg
                   className="w-5 h-5"
@@ -233,6 +292,16 @@ export default function Home() {
                     d="M12.017 0H7.983C3.58 0 0 3.58 0 7.983v4.034C0 16.42 3.58 20 7.983 20h4.034C16.42 20 20 16.42 20 12.017V7.983C20 3.58 16.42 0 12.017 0zM10 15A5 5 0 1110 5a5 5 0 010 10zm6.408-10.845a1.44 1.44 0 01-1.44-1.44 1.44 1.44 0 011.44-1.44 1.44 1.44 0 011.44 1.44 1.44 1.44 0 01-1.44 1.44zM10 6a4 4 0 100 8 4 4 0 000-8z"
                     clipRule="evenodd"
                   />
+                </svg>
+              </a>
+              <a href="#" className="text-gray-400 hover:text-gray-500">
+                <span className="sr-only">Twitter</span>
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
               </a>
             </div>

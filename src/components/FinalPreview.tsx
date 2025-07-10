@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { Team, campaignConfig } from "@/data";
+import Image from "next/image";
 
 interface FinalPreviewProps {
   croppedImageUrl: string;
@@ -127,10 +128,12 @@ export default function FinalPreview({
             />
 
             {/* Frame Overlay */}
-            <img
+            <Image
               src={selectedTeam.frameUrl}
               alt={`${selectedTeam.name} frame`}
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              fill
+              className="object-cover pointer-events-none"
+              sizes="320px"
             />
           </div>
         </div>
@@ -187,57 +190,6 @@ export default function FinalPreview({
               </>
             )}
           </button>
-
-          <button
-            onClick={handleShare}
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
-              />
-            </svg>
-            <span>{campaignConfig.buttonTexts.shareCampaign}</span>
-          </button>
-        </div>
-
-        {/* Tips */}
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <div className="flex items-start space-x-3">
-            <div className="flex-shrink-0">
-              <svg
-                className="w-5 h-5 text-yellow-500 mt-0.5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-yellow-800">
-                {campaignConfig.instructions.finalTips.title}
-              </h3>
-              <div className="mt-1 text-sm text-yellow-700">
-                <ul className="list-disc list-inside space-y-1">
-                  <li>{campaignConfig.instructions.finalTips.useAsProfile}</li>
-                  <li>{campaignConfig.instructions.finalTips.shareSupport}</li>
-                  <li>{campaignConfig.instructions.finalTips.tagFriends}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
