@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Team } from "@/lib/teams";
+import { Team, campaignConfig } from "@/data";
 import TeamSelector from "@/components/TeamSelector";
 import ImageUpload from "@/components/ImageUpload";
 import ImagePreview from "@/components/ImagePreview";
 import FinalPreview from "@/components/FinalPreview";
+import Image from "next/image";
+import mat from "@/public/mat.png";
 
 type Step = "team" | "upload" | "crop" | "final";
 
@@ -43,13 +45,7 @@ export default function Home() {
   };
 
   const getStepTitle = (step: Step) => {
-    const titles = {
-      team: "Choose Team",
-      upload: "Upload Image",
-      crop: "Crop & Preview",
-      final: "Download",
-    };
-    return titles[step];
+    return campaignConfig.stepTitles[step];
   };
 
   return (
@@ -59,26 +55,15 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center">
+                <Image src={mat} alt="logo" width={40} height={40} />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Twibbonize</h1>
+                <h1 className="text-2xl font-bold text-gray-900">
+                  {campaignConfig.title}
+                </h1>
                 <p className="text-sm text-gray-600">
-                  Chiến dịch Mùa hè Xanh 2025 trường Đại học Khoa học tự nhiên
-                  TP.HCM
+                  {campaignConfig.subtitle}
                 </p>
               </div>
             </div>
@@ -101,7 +86,7 @@ export default function Home() {
                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                   />
                 </svg>
-                <span>Start Over</span>
+                <span>{campaignConfig.buttonTexts.startOver}</span>
               </button>
             )}
           </div>
@@ -212,12 +197,13 @@ export default function Home() {
       <footer className="bg-white border-t">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <p className="text-gray-600 text-sm">
-              Created for Summer Volunteer Campaign 2024 • Show your team
-              spirit!
-            </p>
+            <p className="text-gray-600 text-sm">{campaignConfig.footerText}</p>
             <div className="mt-4 flex justify-center space-x-6">
-              <a href="#" className="text-gray-400 hover:text-gray-500">
+              <a
+                href="https://www.facebook.com/bantruyenthongMAT"
+                target="_blank"
+                className="text-gray-400 hover:text-gray-500"
+              >
                 <span className="sr-only">Facebook</span>
                 <svg
                   className="w-5 h-5"
@@ -231,7 +217,11 @@ export default function Home() {
                   />
                 </svg>
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-500">
+              <a
+                href="https://www.instagram.com/bantruyenthongmat/"
+                target="_blank"
+                className="text-gray-400 hover:text-gray-500"
+              >
                 <span className="sr-only">Instagram</span>
                 <svg
                   className="w-5 h-5"
@@ -243,16 +233,6 @@ export default function Home() {
                     d="M12.017 0H7.983C3.58 0 0 3.58 0 7.983v4.034C0 16.42 3.58 20 7.983 20h4.034C16.42 20 20 16.42 20 12.017V7.983C20 3.58 16.42 0 12.017 0zM10 15A5 5 0 1110 5a5 5 0 010 10zm6.408-10.845a1.44 1.44 0 01-1.44-1.44 1.44 1.44 0 011.44-1.44 1.44 1.44 0 011.44 1.44 1.44 1.44 0 01-1.44 1.44zM10 6a4 4 0 100 8 4 4 0 000-8z"
                     clipRule="evenodd"
                   />
-                </svg>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-gray-500">
-                <span className="sr-only">Twitter</span>
-                <svg
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
               </a>
             </div>

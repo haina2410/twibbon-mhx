@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { campaignConfig } from "@/data";
 
 interface ImageUploadProps {
   onImageSelect: (file: File) => void;
@@ -55,7 +56,7 @@ export default function ImageUpload({
   return (
     <div className="w-full max-w-md mx-auto p-6">
       <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-        Upload Your Profile Picture
+        {campaignConfig.instructions.uploadImage}
       </h2>
 
       <div
@@ -97,11 +98,11 @@ export default function ImageUpload({
               </div>
               <div>
                 <p className="text-lg font-semibold text-green-700">
-                  Image Selected!
+                  {campaignConfig.instructions.imageSelected}
                 </p>
                 <p className="text-sm text-gray-600">{selectedImage.name}</p>
                 <p className="text-xs text-gray-500 mt-1">
-                  Click or drag to change
+                  {campaignConfig.instructions.clickOrDragToChange}
                 </p>
               </div>
             </>
@@ -124,9 +125,11 @@ export default function ImageUpload({
               </div>
               <div>
                 <p className="text-lg font-semibold text-gray-700">
-                  Drop your image here
+                  {campaignConfig.instructions.dropImage}
                 </p>
-                <p className="text-sm text-gray-500">or click to browse</p>
+                <p className="text-sm text-gray-500">
+                  {campaignConfig.instructions.orClickToBrowse}
+                </p>
               </div>
             </>
           )}
@@ -135,7 +138,7 @@ export default function ImageUpload({
 
       <div className="mt-4 text-center">
         <p className="text-xs text-gray-500">
-          Supports JPG, PNG, GIF up to 10MB
+          {campaignConfig.instructions.supportedFormats}
         </p>
       </div>
     </div>

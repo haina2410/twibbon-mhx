@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import ReactCrop, { Crop, PixelCrop } from "react-image-crop";
-import { Team } from "@/lib/teams";
+import { Team, campaignConfig } from "@/data";
 import "react-image-crop/dist/ReactCrop.css";
 
 interface ImagePreviewProps {
@@ -98,7 +98,7 @@ export default function ImagePreview({
   return (
     <div className="w-full max-w-2xl mx-auto p-6">
       <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-        Crop Your Image
+        {campaignConfig.instructions.cropImage}
       </h2>
 
       <div className="space-y-6">
@@ -155,15 +155,18 @@ export default function ImagePreview({
             </div>
             <div>
               <h3 className="text-sm font-medium text-blue-800">
-                How to crop your image:
+                {campaignConfig.instructions.cropInstructions.title}
               </h3>
               <div className="mt-1 text-sm text-blue-700">
                 <ul className="list-disc list-inside space-y-1">
-                  <li>Drag the corners to resize the crop area</li>
-                  <li>Drag the center to move the crop area</li>
                   <li>
-                    The crop will be automatically applied to create your final
-                    image
+                    {campaignConfig.instructions.cropInstructions.dragCorners}
+                  </li>
+                  <li>
+                    {campaignConfig.instructions.cropInstructions.dragCenter}
+                  </li>
+                  <li>
+                    {campaignConfig.instructions.cropInstructions.autoApply}
                   </li>
                 </ul>
               </div>

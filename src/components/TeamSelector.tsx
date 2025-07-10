@@ -1,6 +1,6 @@
 "use client";
 
-import { Team, teams } from "@/lib/teams";
+import { Team, teams, campaignConfig } from "@/data";
 import Image from "next/image";
 
 interface TeamSelectorProps {
@@ -15,7 +15,7 @@ export default function TeamSelector({
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
       <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-        Choose Your Team
+        {campaignConfig.instructions.chooseTeam}
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

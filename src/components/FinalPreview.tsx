@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import html2canvas from "html2canvas";
-import { Team } from "@/lib/teams";
+import { Team, campaignConfig } from "@/data";
 
 interface FinalPreviewProps {
   croppedImageUrl: string;
@@ -88,8 +88,8 @@ export default function FinalPreview({
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `${selectedTeam.name} - Summer Volunteer Campaign`,
-          text: `Check out my ${selectedTeam.name} profile picture for our summer volunteer campaign!`,
+          title: `${selectedTeam.name} - ${campaignConfig.socialSharing.title}`,
+          text: `${campaignConfig.socialSharing.description}`,
           url: window.location.href,
         });
       } catch (error) {
@@ -109,7 +109,7 @@ export default function FinalPreview({
   return (
     <div className="w-full max-w-lg mx-auto p-6">
       <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-        Your Profile Picture is Ready!
+        {campaignConfig.instructions.finalReady}
       </h2>
 
       <div className="space-y-6">
@@ -151,7 +151,7 @@ export default function FinalPreview({
               style={{ backgroundColor: selectedTeam.color }}
             />
             <span className="text-sm font-medium text-gray-700">
-              Summer Volunteer Campaign 2024
+              {campaignConfig.subtitle}
             </span>
           </div>
         </div>
@@ -166,7 +166,7 @@ export default function FinalPreview({
             {isDownloading ? (
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                <span>Generating...</span>
+                <span>{campaignConfig.buttonTexts.generating}</span>
               </>
             ) : (
               <>
@@ -183,7 +183,7 @@ export default function FinalPreview({
                     d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                   />
                 </svg>
-                <span>Download Profile Picture</span>
+                <span>{campaignConfig.buttonTexts.downloadProfilePicture}</span>
               </>
             )}
           </button>
@@ -205,7 +205,7 @@ export default function FinalPreview({
                 d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
               />
             </svg>
-            <span>Share Campaign</span>
+            <span>{campaignConfig.buttonTexts.shareCampaign}</span>
           </button>
         </div>
 
@@ -227,13 +227,13 @@ export default function FinalPreview({
             </div>
             <div>
               <h3 className="text-sm font-medium text-yellow-800">
-                Tips for best results:
+                {campaignConfig.instructions.finalTips.title}
               </h3>
               <div className="mt-1 text-sm text-yellow-700">
                 <ul className="list-disc list-inside space-y-1">
-                  <li>Use this as your profile picture on social media</li>
-                  <li>Share it to show your support for the campaign</li>
-                  <li>Tag your friends to join your team!</li>
+                  <li>{campaignConfig.instructions.finalTips.useAsProfile}</li>
+                  <li>{campaignConfig.instructions.finalTips.shareSupport}</li>
+                  <li>{campaignConfig.instructions.finalTips.tagFriends}</li>
                 </ul>
               </div>
             </div>
