@@ -172,8 +172,8 @@ export default function ImagePreview({
                   {campaignConfig.instructions.cropInstructions.dragCenter}
                 </li>
                 <li>
-                  Khi hài lòng với vùng cắt, nhấn "Tiếp tục" để chuyển sang bước
-                  tiếp theo
+                  Khi hài lòng với vùng cắt, nhấn &quot;Tiếp tục&quot; để chuyển
+                  sang bước tiếp theo
                 </li>
               </ul>
             </div>

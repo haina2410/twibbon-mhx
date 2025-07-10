@@ -85,28 +85,6 @@ export default function FinalPreview({
     }
   };
 
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `${selectedTeam.name} - ${campaignConfig.socialSharing.title}`,
-          text: `${campaignConfig.socialSharing.description}`,
-          url: window.location.href,
-        });
-      } catch (error) {
-        console.log("Error sharing:", error);
-      }
-    } else {
-      // Fallback: copy URL to clipboard
-      try {
-        await navigator.clipboard.writeText(window.location.href);
-        alert("Link copied to clipboard!");
-      } catch (error) {
-        console.log("Error copying to clipboard:", error);
-      }
-    }
-  };
-
   return (
     <div className="w-full max-w-lg mx-auto p-6">
       <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
