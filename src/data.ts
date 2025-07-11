@@ -38,7 +38,7 @@ export const teams: Team[] = [
   },
   {
     id: "team-201",
-    name: "Đội hình 201",
+    name: "201",
     color: "#10B981",
     frameUrl: team201Frame,
     description: "Đội hình 201",
@@ -113,7 +113,7 @@ export const campaignConfig = {
   title: "Chiến dịch Mùa hè Xanh 2025",
   subtitle: "Trường Đại học Khoa học tự nhiên TP.HCM",
   year: "2025",
-  footerText: "Website làm nhanh 30 phút để thay thế cho Twibbonize .",
+  footerText: "Website làm nhanh 30 phút để thay thế cho Twibbonize.",
 
   // Step titles (can be customized for different languages)
   stepTitles: {
