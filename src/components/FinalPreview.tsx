@@ -17,11 +17,11 @@ export default function FinalPreview({
   const previewRef = useRef<HTMLDivElement>(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const isMobile = useMemo(() => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-  }, []);
+  // const isMobile = useMemo(() => {
+  //   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //     navigator.userAgent
+  //   );
+  // }, []);
 
   const isInAppBrowser = useMemo(() => {
     return /Instagram|FBAN|FBAV|Twitter|Line|WeChat|MicroMessenger/i.test(

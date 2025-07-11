@@ -26,6 +26,15 @@ export const metadata: Metadata = {
     description: campaignConfig.subtitle,
     type: "website",
     locale: "vi_VN",
+    countryName: "Vietnam",
+    images: [
+      {
+        url: "https://frame-mhx-2025.vercel.app/public/og.png",
+        width: 1436,
+        height: 630,
+        alt: "Mùa hè Xanh 2025 - Trường Đại học Khoa học tự nhiên TP.HCM",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
