@@ -36,15 +36,17 @@ export default function FinalPreview({
     const tempContainer = document.createElement("div");
     tempContainer.style.position = "absolute";
     tempContainer.style.left = "-9999px";
-    tempContainer.style.width = "512px";
-    tempContainer.style.height = "512px";
-    tempContainer.style.backgroundColor = "white";
+    tempContainer.style.width = "2048px";
+    tempContainer.style.height = "2048px";
+    tempContainer.style.backgroundColor = "transparent";
 
     // Clone the preview content
     const previewClone = previewRef.current.cloneNode(true) as HTMLElement;
-    previewClone.style.width = "512px";
-    previewClone.style.height = "512px";
+    previewClone.style.width = "2048px";
+    previewClone.style.height = "2048px";
     previewClone.style.position = "relative";
+    previewClone.style.borderRadius = "0"; // Remove rounded corners
+    previewClone.style.overflow = "visible"; // Remove overflow hidden
 
     tempContainer.appendChild(previewClone);
     document.body.appendChild(tempContainer);
@@ -67,12 +69,12 @@ export default function FinalPreview({
 
       // Generate the image
       const canvas = await html2canvas(tempContainer, {
-        width: 512,
-        height: 512,
+        width: 2048,
+        height: 2048,
         scale: 1,
         useCORS: true,
         allowTaint: true,
-        backgroundColor: "#ffffff",
+        backgroundColor: null, // Transparent background
       });
 
       return canvas.toDataURL("image/png");
@@ -172,7 +174,7 @@ export default function FinalPreview({
         <div className="text-center">
           <div
             ref={previewRef}
-            className="relative inline-block w-80 h-80 mx-auto rounded-lg overflow-hidden shadow-lg"
+            className="relative inline-block w-80 h-80 mx-auto overflow-hidden shadow-lg"
           >
             {/* Background Image (Cropped) */}
             <img
