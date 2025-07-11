@@ -35,27 +35,23 @@ function detectMobile(userAgent: string): boolean {
   return MOBILE_PATTERNS.some((pattern) => pattern.test(userAgent));
 }
 
-function getSpecificInAppBrowser(userAgent: string): string | null {
-  if (/Instagram/i.test(userAgent)) return "instagram";
-  if (/FBAN|FBAV/i.test(userAgent)) return "facebook";
-  if (/Twitter/i.test(userAgent)) return "twitter";
-  if (/TikTok/i.test(userAgent)) return "tiktok";
-  if (/Line/i.test(userAgent)) return "line";
-  if (/MicroMessenger/i.test(userAgent)) return "wechat";
-  if (/Snapchat/i.test(userAgent)) return "snapchat";
-  if (/LinkedIn/i.test(userAgent)) return "linkedin";
-  if (/WhatsApp/i.test(userAgent)) return "whatsapp";
-  if (/Telegram/i.test(userAgent)) return "telegram";
-  if (/Pinterest/i.test(userAgent)) return "pinterest";
-  if (/Reddit/i.test(userAgent)) return "reddit";
-  if (/Discord/i.test(userAgent)) return "discord";
-  return null;
-}
-
 function getDeviceType(userAgent: string): "ios" | "android" | "desktop" {
   if (/iPhone|iPad|iPod/i.test(userAgent)) return "ios";
   if (/Android/i.test(userAgent)) return "android";
   return "desktop";
+}
+
+function createNativeBrowserUrl(
+  originalUrl: string,
+  deviceType: "ios" | "android"
+): string {
+  if (deviceType === "ios") {
+    // Try to open in Safari
+    return `x-web-search://?${encodeURIComponent(originalUrl)}`;
+  } else {
+    // Try to open in Chrome on Android
+    return `googlechrome://${originalUrl.replace("https://", "")}`;
+  }
 }
 
 export function middleware(request: NextRequest) {
@@ -65,7 +61,6 @@ export function middleware(request: NextRequest) {
   // Detect browser types
   const isInAppBrowser = detectInAppBrowser(userAgent);
   const isMobile = detectMobile(userAgent);
-  const specificBrowser = getSpecificInAppBrowser(userAgent);
   const deviceType = getDeviceType(userAgent);
 
   // Create response with headers
@@ -76,34 +71,20 @@ export function middleware(request: NextRequest) {
   response.headers.set("X-Is-Mobile", isMobile.toString());
   response.headers.set("X-Device-Type", deviceType);
 
-  if (specificBrowser) {
-    response.headers.set("X-Specific-Browser", specificBrowser);
-  }
-
   // Auto-redirect in-app browsers to native browsers
-  if (isInAppBrowser && isMobile) {
+  if (
+    isInAppBrowser &&
+    isMobile &&
+    (deviceType === "ios" || deviceType === "android")
+  ) {
     // Skip redirect for already processed requests
     if (url.searchParams.get("inapp") === "true") {
       return response;
     }
 
-    // Skip redirect for our redirect pages
-    if (url.pathname.startsWith("/redirect-to-")) {
-      return response;
-    }
-
-    // Auto-redirect to appropriate browser
-    if (deviceType === "ios") {
-      url.pathname = "/redirect-to-safari";
-      url.searchParams.set("target", request.url);
-      return NextResponse.redirect(url);
-    }
-
-    if (deviceType === "android") {
-      url.pathname = "/redirect-to-chrome";
-      url.searchParams.set("target", request.url);
-      return NextResponse.redirect(url);
-    }
+    // Create native browser URL and redirect
+    const nativeBrowserUrl = createNativeBrowserUrl(request.url, deviceType);
+    return NextResponse.redirect(nativeBrowserUrl, 301);
   }
 
   return response;
