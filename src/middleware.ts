@@ -47,10 +47,10 @@ function createNativeBrowserUrl(
 ): string {
   if (deviceType === "ios") {
     // Try to open in Safari
-    return `x-web-search://?${encodeURIComponent(originalUrl)}`;
+    return `https://?${encodeURIComponent(originalUrl)}`;
   } else {
     // Try to open in Chrome on Android
-    return `googlechrome://${originalUrl.replace("https://", "")}`;
+    return `intent://${originalUrl}#Intent;end`;
   }
 }
 
