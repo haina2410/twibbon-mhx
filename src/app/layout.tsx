@@ -27,6 +27,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "vi_VN",
     countryName: "Vietnam",
+    images: [
+      {
+        url: "/og.png",
+        width: 1436,
+        height: 630,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

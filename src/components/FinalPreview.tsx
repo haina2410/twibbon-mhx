@@ -1,9 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import html2canvas from "html2canvas";
 import { Team, campaignConfig } from "@/data";
-import Image from "next/image";
+import { saveAs } from "file-saver";
 
 interface FinalPreviewProps {
   croppedImageUrl: string;
@@ -18,57 +17,68 @@ export default function FinalPreview({
   const [isDownloading, setIsDownloading] = useState(false);
 
   const generateImage = async (): Promise<string> => {
-    if (!previewRef.current) throw new Error("Preview not found");
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
 
-    // Create a temporary container with the exact size we want
-    const tempContainer = document.createElement("div");
-    tempContainer.style.position = "absolute";
-    tempContainer.style.left = "-9999px";
-    tempContainer.style.width = "2048px";
-    tempContainer.style.height = "2048px";
-    tempContainer.style.backgroundColor = "transparent";
+    if (!ctx) {
+      console.error("Canvas context not available");
+      return "";
+    }
 
-    // Clone the preview content
-    const previewClone = previewRef.current.cloneNode(true) as HTMLElement;
-    previewClone.style.width = "2048px";
-    previewClone.style.height = "2048px";
-    previewClone.style.position = "relative";
-    previewClone.style.borderRadius = "0"; // Remove rounded corners
-    previewClone.style.overflow = "visible"; // Remove overflow hidden
-
-    tempContainer.appendChild(previewClone);
-    document.body.appendChild(tempContainer);
+    canvas.width = 2048;
+    canvas.height = 2048;
 
     try {
-      // Wait for images to load
-      const images = tempContainer.querySelectorAll("img");
-      await Promise.all(
-        Array.from(images).map((img) => {
-          return new Promise((resolve) => {
-            if (img.complete) {
-              resolve(null);
-            } else {
-              img.onload = () => resolve(null);
-              img.onerror = () => resolve(null);
-            }
-          });
-        })
-      );
+      // Load and draw the cropped user image
+      const userImage = new Image();
+      userImage.crossOrigin = "anonymous";
 
-      // Generate the image
-      const canvas = await html2canvas(tempContainer, {
-        width: 2048,
-        height: 2048,
-        scale: 1,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: null, // Transparent background
+      await new Promise<void>((resolve, reject) => {
+        userImage.onload = () => resolve();
+        userImage.onerror = () =>
+          reject(new Error("Failed to load user image"));
+        userImage.src = croppedImageUrl;
       });
 
+      // Draw user image as background, scaled to fill the canvas
+      ctx.drawImage(userImage, 0, 0, 2048, 2048);
+
+      // Load and draw the frame overlay
+      const frameImage = new Image();
+      frameImage.crossOrigin = "anonymous";
+
+      const frameUrl =
+        typeof selectedTeam.frameUrl === "string"
+          ? selectedTeam.frameUrl
+          : selectedTeam.frameUrl.src;
+
+      console.log("Loading frame from URL:", frameUrl);
+
+      await new Promise<void>((resolve, reject) => {
+        frameImage.onload = () => {
+          console.log(
+            "Frame image loaded successfully, dimensions:",
+            frameImage.width,
+            "x",
+            frameImage.height
+          );
+          resolve();
+        };
+        frameImage.onerror = (e) => {
+          console.error("Failed to load frame image:", e);
+          reject(new Error("Failed to load frame image"));
+        };
+        frameImage.src = frameUrl;
+      });
+
+      // Draw frame on top
+      console.log("Drawing frame on canvas");
+      ctx.drawImage(frameImage, 0, 0, 2048, 2048);
+
       return canvas.toDataURL("image/png");
-    } finally {
-      // Clean up
-      document.body.removeChild(tempContainer);
+    } catch (error) {
+      console.error("Error generating image:", error);
+      throw error;
     }
   };
 
@@ -91,12 +101,7 @@ export default function FinalPreview({
 
   const tryDirectDownload = async (dataUrl: string) => {
     try {
-      const link = document.createElement("a");
-      link.download = `${selectedTeam.name
-        .toLowerCase()
-        .replace(/\s+/g, "-")}-profile-picture.png`;
-      link.href = dataUrl;
-      link.click();
+      saveAs(dataUrl, `${selectedTeam.name}-profile-picture.png`);
     } catch (error) {
       console.error("Direct download failed:", error);
     }
@@ -123,12 +128,14 @@ export default function FinalPreview({
             />
 
             {/* Frame Overlay */}
-            <Image
-              src={selectedTeam.frameUrl}
+            <img
+              src={
+                typeof selectedTeam.frameUrl === "string"
+                  ? selectedTeam.frameUrl
+                  : selectedTeam.frameUrl.src
+              }
               alt={`${selectedTeam.name} frame`}
-              fill
-              className="object-cover pointer-events-none"
-              sizes="320px"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
             />
           </div>
         </div>
