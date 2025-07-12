@@ -142,8 +142,8 @@ export default function WebViewDialog({ onClose }: WebViewDialogProps) {
                 </div>
                 <div>
                   <p className="text-sm text-gray-700">
-                    Chọn <strong>"Mở trong trình duyệt"</strong> hoặc{" "}
-                    <strong>"Open in Browser"</strong>
+                    Chọn <strong>&quot;Mở trong trình duyệt&quot;</strong> hoặc{" "}
+                    <strong>&quot;Open in Browser&quot;</strong>
                   </p>
                 </div>
               </div>
