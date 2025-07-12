@@ -312,7 +312,11 @@ export default function Home() {
                   />
                 </svg>
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-500">
+              <a
+                href="https://www.facebook.com/bantruyenthongMAT"
+                target="_blank"
+                className="text-gray-400 hover:text-gray-500"
+              >
                 <span className="sr-only">Facebook</span>
                 <svg
                   className="w-5 h-5"
@@ -326,7 +330,11 @@ export default function Home() {
                   />
                 </svg>
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-500">
+              <a
+                href="https://www.instagram.com/bantruyenthongmat"
+                target="_blank"
+                className="text-gray-400 hover:text-gray-500"
+              >
                 <span className="sr-only">Instagram</span>
                 <svg
                   className="w-5 h-5"
