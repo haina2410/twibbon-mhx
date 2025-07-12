@@ -8,6 +8,7 @@ import ImagePreview from "@/components/ImagePreview";
 import FinalPreview from "@/components/FinalPreview";
 import Image from "next/image";
 import mat from "@/public/mat.png";
+import WebViewDialog from "@/components/WebViewDialog";
 
 type Step = "team" | "upload" | "crop" | "final";
 
@@ -68,6 +69,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <WebViewDialog />
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
